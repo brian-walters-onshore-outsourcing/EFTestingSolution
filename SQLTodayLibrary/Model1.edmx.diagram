@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a5d026d7a42f4a6680db972fc3f1c9fb" Name="Diagram1">
+        <EntityTypeShape EntityType="sqltodayModel.QDEL" Width="1.5" PointX="4.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sqltodayModel.QDEPT" Width="1.5" PointX="2.625" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sqltodayModel.QEMP" Width="1.5" PointX="0.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sqltodayModel.QITEM" Width="1.5" PointX="6.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sqltodayModel.QSALE" Width="1.5" PointX="3.875" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="sqltodayModel.QSPL" Width="1.5" PointX="8.5" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="sqltodayModel.FK_DeptName" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.FK_ItemName" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.FK_SPLNAME" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.DEPTFK1" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.EmpFK2" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.SALEFK2" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.EmpFK1" ManuallyRouted="false" />
+        <AssociationConnector Association="sqltodayModel.SALEFK1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

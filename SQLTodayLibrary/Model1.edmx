@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sqltodayModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="QDEL">
+          <Key>
+            <PropertyRef Name="DELNO" />
+          </Key>
+          <Property Name="DELNO" Type="int" Nullable="false" />
+          <Property Name="DELQTY" Type="int" Nullable="false" />
+          <Property Name="ITEMNAME" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="DEPTNAME" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="SPLNO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QDEPT">
+          <Key>
+            <PropertyRef Name="DEPTNAME" />
+          </Key>
+          <Property Name="DEPTNAME" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="DEPTFLOOR" Type="int" Nullable="false" />
+          <Property Name="DEPTPHONE" Type="int" Nullable="false" />
+          <Property Name="EMPNO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QEMP">
+          <Key>
+            <PropertyRef Name="EMPNO" />
+          </Key>
+          <Property Name="EMPNO" Type="int" Nullable="false" />
+          <Property Name="EMPFNAME" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EMPSALARY" Type="int" Nullable="false" />
+          <Property Name="DEPTNAME" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="BOSSNO" Type="int" />
+        </EntityType>
+        <EntityType Name="QITEM">
+          <Key>
+            <PropertyRef Name="ITEMNAME" />
+          </Key>
+          <Property Name="ITEMNAME" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ITEMTYPE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ITEMCOLOR" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="QSALE">
+          <Key>
+            <PropertyRef Name="SALENO" />
+          </Key>
+          <Property Name="SALENO" Type="int" Nullable="false" />
+          <Property Name="SALEQTY" Type="int" Nullable="false" />
+          <Property Name="ITEMNAME" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="DEPTNAME" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QSPL">
+          <Key>
+            <PropertyRef Name="SPLNO" />
+          </Key>
+          <Property Name="SPLNO" Type="int" Nullable="false" />
+          <Property Name="SPLNAME" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <Association Name="DEPTFK1">
+          <End Role="QEMP" Type="Self.QEMP" Multiplicity="1" />
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QEMP">
+              <PropertyRef Name="EMPNO" />
+            </Principal>
+            <Dependent Role="QDEPT">
+              <PropertyRef Name="EMPNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpFK1">
+          <End Role="QEMP" Type="Self.QEMP" Multiplicity="0..1" />
+          <End Role="QEMP1" Type="Self.QEMP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QEMP">
+              <PropertyRef Name="EMPNO" />
+            </Principal>
+            <Dependent Role="QEMP1">
+              <PropertyRef Name="BOSSNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpFK2">
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="1" />
+          <End Role="QEMP" Type="Self.QEMP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QDEPT">
+              <PropertyRef Name="DEPTNAME" />
+            </Principal>
+            <Dependent Role="QEMP">
+              <PropertyRef Name="DEPTNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptName">
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="1" />
+          <End Role="QDEL" Type="Self.QDEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QDEPT">
+              <PropertyRef Name="DEPTNAME" />
+            </Principal>
+            <Dependent Role="QDEL">
+              <PropertyRef Name="DEPTNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemName">
+          <End Role="QITEM" Type="Self.QITEM" Multiplicity="1" />
+          <End Role="QDEL" Type="Self.QDEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QITEM">
+              <PropertyRef Name="ITEMNAME" />
+            </Principal>
+            <Dependent Role="QDEL">
+              <PropertyRef Name="ITEMNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPLNAME">
+          <End Role="QSPL" Type="Self.QSPL" Multiplicity="1" />
+          <End Role="QDEL" Type="Self.QDEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QSPL">
+              <PropertyRef Name="SPLNO" />
+            </Principal>
+            <Dependent Role="QDEL">
+              <PropertyRef Name="SPLNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SALEFK1">
+          <End Role="QITEM" Type="Self.QITEM" Multiplicity="1" />
+          <End Role="QSALE" Type="Self.QSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QITEM">
+              <PropertyRef Name="ITEMNAME" />
+            </Principal>
+            <Dependent Role="QSALE">
+              <PropertyRef Name="ITEMNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SALEFK2">
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="1" />
+          <End Role="QSALE" Type="Self.QSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QDEPT">
+              <PropertyRef Name="DEPTNAME" />
+            </Principal>
+            <Dependent Role="QSALE">
+              <PropertyRef Name="DEPTNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sqltodayModelStoreContainer">
+          <EntitySet Name="QDEL" EntityType="Self.QDEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QDEPT" EntityType="Self.QDEPT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QEMP" EntityType="Self.QEMP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QITEM" EntityType="Self.QITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QSALE" EntityType="Self.QSALE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QSPL" EntityType="Self.QSPL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="DEPTFK1" Association="Self.DEPTFK1">
+            <End Role="QEMP" EntitySet="QEMP" />
+            <End Role="QDEPT" EntitySet="QDEPT" />
+          </AssociationSet>
+          <AssociationSet Name="EmpFK1" Association="Self.EmpFK1">
+            <End Role="QEMP" EntitySet="QEMP" />
+            <End Role="QEMP1" EntitySet="QEMP" />
+          </AssociationSet>
+          <AssociationSet Name="EmpFK2" Association="Self.EmpFK2">
+            <End Role="QDEPT" EntitySet="QDEPT" />
+            <End Role="QEMP" EntitySet="QEMP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptName" Association="Self.FK_DeptName">
+            <End Role="QDEPT" EntitySet="QDEPT" />
+            <End Role="QDEL" EntitySet="QDEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemName" Association="Self.FK_ItemName">
+            <End Role="QITEM" EntitySet="QITEM" />
+            <End Role="QDEL" EntitySet="QDEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPLNAME" Association="Self.FK_SPLNAME">
+            <End Role="QSPL" EntitySet="QSPL" />
+            <End Role="QDEL" EntitySet="QDEL" />
+          </AssociationSet>
+          <AssociationSet Name="SALEFK1" Association="Self.SALEFK1">
+            <End Role="QITEM" EntitySet="QITEM" />
+            <End Role="QSALE" EntitySet="QSALE" />
+          </AssociationSet>
+          <AssociationSet Name="SALEFK2" Association="Self.SALEFK2">
+            <End Role="QDEPT" EntitySet="QDEPT" />
+            <End Role="QSALE" EntitySet="QSALE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sqltodayModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="QDEL">
+          <Key>
+            <PropertyRef Name="DELNO" />
+          </Key>
+          <Property Name="DELNO" Type="Int32" Nullable="false" />
+          <Property Name="DELQTY" Type="Int32" Nullable="false" />
+          <Property Name="ITEMNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DEPTNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SPLNO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QDEPT" Relationship="Self.FK_DeptName" FromRole="QDEL" ToRole="QDEPT" />
+          <NavigationProperty Name="QITEM" Relationship="Self.FK_ItemName" FromRole="QDEL" ToRole="QITEM" />
+          <NavigationProperty Name="QSPL" Relationship="Self.FK_SPLNAME" FromRole="QDEL" ToRole="QSPL" />
+        </EntityType>
+        <EntityType Name="QDEPT">
+          <Key>
+            <PropertyRef Name="DEPTNAME" />
+          </Key>
+          <Property Name="DEPTNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DEPTFLOOR" Type="Int32" Nullable="false" />
+          <Property Name="DEPTPHONE" Type="Int32" Nullable="false" />
+          <Property Name="EMPNO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QDELs" Relationship="Self.FK_DeptName" FromRole="QDEPT" ToRole="QDEL" />
+          <NavigationProperty Name="QEMP" Relationship="Self.DEPTFK1" FromRole="QDEPT" ToRole="QEMP" />
+          <NavigationProperty Name="QEMPs" Relationship="Self.EmpFK2" FromRole="QDEPT" ToRole="QEMP" />
+          <NavigationProperty Name="QSALEs" Relationship="Self.SALEFK2" FromRole="QDEPT" ToRole="QSALE" />
+        </EntityType>
+        <EntityType Name="QEMP">
+          <Key>
+            <PropertyRef Name="EMPNO" />
+          </Key>
+          <Property Name="EMPNO" Type="Int32" Nullable="false" />
+          <Property Name="EMPFNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPSALARY" Type="Int32" Nullable="false" />
+          <Property Name="DEPTNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BOSSNO" Type="Int32" />
+          <NavigationProperty Name="QDEPTs" Relationship="Self.DEPTFK1" FromRole="QEMP" ToRole="QDEPT" />
+          <NavigationProperty Name="QDEPT" Relationship="Self.EmpFK2" FromRole="QEMP" ToRole="QDEPT" />
+          <NavigationProperty Name="Employees" Relationship="Self.EmpFK1" FromRole="QEMP" ToRole="QEMP1" />
+          <NavigationProperty Name="Boss" Relationship="Self.EmpFK1" FromRole="QEMP1" ToRole="QEMP" />
+        </EntityType>
+        <EntityType Name="QITEM">
+          <Key>
+            <PropertyRef Name="ITEMNAME" />
+          </Key>
+          <Property Name="ITEMNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ITEMTYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ITEMCOLOR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="QDELs" Relationship="Self.FK_ItemName" FromRole="QITEM" ToRole="QDEL" />
+          <NavigationProperty Name="QSALEs" Relationship="Self.SALEFK1" FromRole="QITEM" ToRole="QSALE" />
+        </EntityType>
+        <EntityType Name="QSALE">
+          <Key>
+            <PropertyRef Name="SALENO" />
+          </Key>
+          <Property Name="SALENO" Type="Int32" Nullable="false" />
+          <Property Name="SALEQTY" Type="Int32" Nullable="false" />
+          <Property Name="ITEMNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DEPTNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="QDEPT" Relationship="Self.SALEFK2" FromRole="QSALE" ToRole="QDEPT" />
+          <NavigationProperty Name="QITEM" Relationship="Self.SALEFK1" FromRole="QSALE" ToRole="QITEM" />
+        </EntityType>
+        <EntityType Name="QSPL">
+          <Key>
+            <PropertyRef Name="SPLNO" />
+          </Key>
+          <Property Name="SPLNO" Type="Int32" Nullable="false" />
+          <Property Name="SPLNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="QDELs" Relationship="Self.FK_SPLNAME" FromRole="QSPL" ToRole="QDEL" />
+        </EntityType>
+        <Association Name="FK_DeptName">
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="1" />
+          <End Role="QDEL" Type="Self.QDEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QDEPT">
+              <PropertyRef Name="DEPTNAME" />
+            </Principal>
+            <Dependent Role="QDEL">
+              <PropertyRef Name="DEPTNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemName">
+          <End Role="QITEM" Type="Self.QITEM" Multiplicity="1" />
+          <End Role="QDEL" Type="Self.QDEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QITEM">
+              <PropertyRef Name="ITEMNAME" />
+            </Principal>
+            <Dependent Role="QDEL">
+              <PropertyRef Name="ITEMNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPLNAME">
+          <End Role="QSPL" Type="Self.QSPL" Multiplicity="1" />
+          <End Role="QDEL" Type="Self.QDEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QSPL">
+              <PropertyRef Name="SPLNO" />
+            </Principal>
+            <Dependent Role="QDEL">
+              <PropertyRef Name="SPLNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DEPTFK1">
+          <End Role="QEMP" Type="Self.QEMP" Multiplicity="1" />
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QEMP">
+              <PropertyRef Name="EMPNO" />
+            </Principal>
+            <Dependent Role="QDEPT">
+              <PropertyRef Name="EMPNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpFK2">
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="1" />
+          <End Role="QEMP" Type="Self.QEMP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QDEPT">
+              <PropertyRef Name="DEPTNAME" />
+            </Principal>
+            <Dependent Role="QEMP">
+              <PropertyRef Name="DEPTNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SALEFK2">
+          <End Role="QDEPT" Type="Self.QDEPT" Multiplicity="1" />
+          <End Role="QSALE" Type="Self.QSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QDEPT">
+              <PropertyRef Name="DEPTNAME" />
+            </Principal>
+            <Dependent Role="QSALE">
+              <PropertyRef Name="DEPTNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpFK1">
+          <End Role="QEMP" Type="Self.QEMP" Multiplicity="0..1" />
+          <End Role="QEMP1" Type="Self.QEMP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QEMP">
+              <PropertyRef Name="EMPNO" />
+            </Principal>
+            <Dependent Role="QEMP1">
+              <PropertyRef Name="BOSSNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SALEFK1">
+          <End Role="QITEM" Type="Self.QITEM" Multiplicity="1" />
+          <End Role="QSALE" Type="Self.QSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QITEM">
+              <PropertyRef Name="ITEMNAME" />
+            </Principal>
+            <Dependent Role="QSALE">
+              <PropertyRef Name="ITEMNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sqltodayEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="QDELs" EntityType="Self.QDEL" />
+          <EntitySet Name="QDEPTs" EntityType="Self.QDEPT" />
+          <EntitySet Name="QEMPs" EntityType="Self.QEMP" />
+          <EntitySet Name="QITEMs" EntityType="Self.QITEM" />
+          <EntitySet Name="QSALEs" EntityType="Self.QSALE" />
+          <EntitySet Name="QSPLs" EntityType="Self.QSPL" />
+          <AssociationSet Name="FK_DeptName" Association="Self.FK_DeptName">
+            <End Role="QDEPT" EntitySet="QDEPTs" />
+            <End Role="QDEL" EntitySet="QDELs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemName" Association="Self.FK_ItemName">
+            <End Role="QITEM" EntitySet="QITEMs" />
+            <End Role="QDEL" EntitySet="QDELs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPLNAME" Association="Self.FK_SPLNAME">
+            <End Role="QSPL" EntitySet="QSPLs" />
+            <End Role="QDEL" EntitySet="QDELs" />
+          </AssociationSet>
+          <AssociationSet Name="DEPTFK1" Association="Self.DEPTFK1">
+            <End Role="QEMP" EntitySet="QEMPs" />
+            <End Role="QDEPT" EntitySet="QDEPTs" />
+          </AssociationSet>
+          <AssociationSet Name="EmpFK2" Association="Self.EmpFK2">
+            <End Role="QDEPT" EntitySet="QDEPTs" />
+            <End Role="QEMP" EntitySet="QEMPs" />
+          </AssociationSet>
+          <AssociationSet Name="SALEFK2" Association="Self.SALEFK2">
+            <End Role="QDEPT" EntitySet="QDEPTs" />
+            <End Role="QSALE" EntitySet="QSALEs" />
+          </AssociationSet>
+          <AssociationSet Name="EmpFK1" Association="Self.EmpFK1">
+            <End Role="QEMP" EntitySet="QEMPs" />
+            <End Role="QEMP1" EntitySet="QEMPs" />
+          </AssociationSet>
+          <AssociationSet Name="SALEFK1" Association="Self.SALEFK1">
+            <End Role="QITEM" EntitySet="QITEMs" />
+            <End Role="QSALE" EntitySet="QSALEs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sqltodayModelStoreContainer" CdmEntityContainer="sqltodayEntities">
+          <EntitySetMapping Name="QDELs">
+            <EntityTypeMapping TypeName="sqltodayModel.QDEL">
+              <MappingFragment StoreEntitySet="QDEL">
+                <ScalarProperty Name="DELNO" ColumnName="DELNO" />
+                <ScalarProperty Name="DELQTY" ColumnName="DELQTY" />
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+                <ScalarProperty Name="DEPTNAME" ColumnName="DEPTNAME" />
+                <ScalarProperty Name="SPLNO" ColumnName="SPLNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QDEPTs">
+            <EntityTypeMapping TypeName="sqltodayModel.QDEPT">
+              <MappingFragment StoreEntitySet="QDEPT">
+                <ScalarProperty Name="DEPTNAME" ColumnName="DEPTNAME" />
+                <ScalarProperty Name="DEPTFLOOR" ColumnName="DEPTFLOOR" />
+                <ScalarProperty Name="DEPTPHONE" ColumnName="DEPTPHONE" />
+                <ScalarProperty Name="EMPNO" ColumnName="EMPNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QEMPs">
+            <EntityTypeMapping TypeName="sqltodayModel.QEMP">
+              <MappingFragment StoreEntitySet="QEMP">
+                <ScalarProperty Name="EMPNO" ColumnName="EMPNO" />
+                <ScalarProperty Name="EMPFNAME" ColumnName="EMPFNAME" />
+                <ScalarProperty Name="EMPSALARY" ColumnName="EMPSALARY" />
+                <ScalarProperty Name="DEPTNAME" ColumnName="DEPTNAME" />
+                <ScalarProperty Name="BOSSNO" ColumnName="BOSSNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QITEMs">
+            <EntityTypeMapping TypeName="sqltodayModel.QITEM">
+              <MappingFragment StoreEntitySet="QITEM">
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+                <ScalarProperty Name="ITEMTYPE" ColumnName="ITEMTYPE" />
+                <ScalarProperty Name="ITEMCOLOR" ColumnName="ITEMCOLOR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QSALEs">
+            <EntityTypeMapping TypeName="sqltodayModel.QSALE">
+              <MappingFragment StoreEntitySet="QSALE">
+                <ScalarProperty Name="SALENO" ColumnName="SALENO" />
+                <ScalarProperty Name="SALEQTY" ColumnName="SALEQTY" />
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+                <ScalarProperty Name="DEPTNAME" ColumnName="DEPTNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QSPLs">
+            <EntityTypeMapping TypeName="sqltodayModel.QSPL">
+              <MappingFragment StoreEntitySet="QSPL">
+                <ScalarProperty Name="SPLNO" ColumnName="SPLNO" />
+                <ScalarProperty Name="SPLNAME" ColumnName="SPLNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
