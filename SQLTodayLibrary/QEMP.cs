@@ -33,5 +33,6 @@ namespace SQLTodayLibrary
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QEMP> Employees { get; set; }
         public virtual QEMP Boss { get; set; }
+       
     }
 }

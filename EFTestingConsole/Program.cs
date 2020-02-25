@@ -10,6 +10,12 @@ namespace EFTestingConsole
     {
         static void Main(string[] args)
         {
+            SQLTodayLibrary.sqltodayEntities ctx =
+                new SQLTodayLibrary.sqltodayEntities();
+            foreach( var x in ctx.QEMPs)
+            {
+                Console.WriteLine(x);
+            }
         }
     }
 }
