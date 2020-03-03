@@ -27,6 +27,9 @@ namespace EFTestingConsole
     }
     class Program
     {
+
+       
+
         static void Main(string[] args)
         {
             #region initialization
@@ -57,11 +60,31 @@ namespace EFTestingConsole
 
             int cutoff = 3;
 
+
+
+            var mydatadictionary = datas.ToDictionary(x => x.stringData );
+
+            
+
+            var q2 = datas
+                    .Where(x => x.doubleData > cutoff)
+                    .Select(x => 
+                          new { x.doubleData, 
+                                x.stringData, 
+                                x.stringData.Length,
+                                
+                              });
+            
             var q1 = from y in datas
                      where (y.intData > cutoff)
-                     select new {y.stringData, y.doubleData, length = y.stringData.Length };
+                     select new { y.doubleData, y.stringData, y.stringData.Length };
+
            
-            var l = q1.ToList();
+           
+            var list1 = q1.ToList();
+            cutoff = 7;
+            var list2 = q1.ToList();
+            
 
             foreach(var x in q1)
             {
