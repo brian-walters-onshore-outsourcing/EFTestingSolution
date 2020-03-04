@@ -57,51 +57,35 @@ namespace EFTestingConsole
             datas.Add(new Data(8, "Eight", 'E', 8.8888));
             datas.Add(new Data(9, "Nine", 'N', 9.9999));
             #endregion initialization
+            QEMP mainemp;
 
-            int cutoff = 3;
-
-
-
-            var mydatadictionary = datas.ToDictionary(x => x.stringData );
-
-            
-
-            var q2 = datas
-                    .Where(x => x.doubleData > cutoff)
-                    .Select(x => 
-                          new { x.doubleData, 
-                                x.stringData, 
-                                x.stringData.Length,
-                                
-                              });
-            
-            var q1 = from y in datas
-                     where (y.intData > cutoff)
-                     select new { y.doubleData, y.stringData, y.stringData.Length };
-
-           
-           
-            var list1 = q1.ToList();
-            cutoff = 7;
-            var list2 = q1.ToList();
-            
-
-            foreach(var x in q1)
+            using (sqltodayEntities ctx = new sqltodayEntities())
             {
-                Console.WriteLine(x);
+               // ctx.Database.Log = Console.Write;
+                Console.WriteLine(ctx.ChangeTracker.Entries().Count());
+                var Q1 = from r in ctx.QEMPs select r;
+                Console.WriteLine(ctx.ChangeTracker.Entries().Count());
+                var L1 = Q1.ToList();
+                Console.WriteLine(ctx.ChangeTracker.Entries().Count());
+                mainemp = L1[0];
+                Console.WriteLine(L1[0]);
+                Console.WriteLine(ctx.ChangeTracker.Entries().Count());
+              //  Console.WriteLine(L1[0].QDEPT.DEPTFLOOR);
+              //foreach (var item in L1)
+              //  {
+              //      Console.WriteLine(item.QDEPT.DEPTFLOOR);
+              //      Console.WriteLine($"Count:{ctx.ChangeTracker.Entries().Count()}");
+              //      foreach(var delitem in item.QDEPT.QDELs)
+              //      {
+              //          Console.WriteLine(delitem.QITEM);
+              //          Console.WriteLine($"Count:{ctx.ChangeTracker.Entries().Count()}");
+              //      }
+              //  }
+                Console.WriteLine(ctx.ChangeTracker.Entries().Count());
             }
 
-            cutoff = 1;
-           
-            Console.WriteLine("*******************");
-            foreach (var x in q1)
-            {
-                Console.WriteLine(x);
-            }
-
-
-
-
+            Console.WriteLine(mainemp);
+            Console.WriteLine(mainemp.DEPTNAME);
 
         }
     }
